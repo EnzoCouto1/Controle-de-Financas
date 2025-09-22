@@ -48,12 +48,12 @@ Para rodar este projeto em seu ambiente local, siga os passos abaixo.
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git](https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git)
+    git clone https://github.com/EnzoCouto1/Controle-de-Financas
     ```
 
 2.  **Navegue até o diretório do projeto:**
     ```bash
-    cd SEU-REPOSITORIO
+    cd !!SEU-REPOSITORIO!!(Em desenvolvimento)
     ```
 
 3.  **Crie um arquivo de variáveis de ambiente:**
