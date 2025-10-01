@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+
+  # 1. SERVIÇO DO BANCO DE DADOS (PostgreSQL)
+  db:
+    image: postgres:16-alpine
+    container_name: financas_db
+    # Mapeia a porta 5432 do container para a porta 5432 da sua máquina
+    ports:
+      - "5432:5432"
+    # Monta um volume para que os dados persistam (não sejam apagados ao desligar o container)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    # Variáveis de ambiente que o container do PostgreSQL usará
+    environment:
+      POSTGRES_USER: financas_user
+      POSTGRES_PASSWORD: senha_secreta
+      POSTGRES_DB: financas_db
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U financas_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. SERVIÇO DO BACKEND (FastAPI)
+  backend:
+    build:
+      context: ./backend # Informa ao Docker para olhar dentro da pasta 'backend'
+      dockerfile: Dockerfile
+    container_name: financas_backend
+    # Mapeia a porta 8000 do container para a porta 8000 da sua máquina
+    ports:
+      - "8000:8000"
+    # Monta o código local no container para que o hot-reload funcione
+    volumes:
+      - ./backend:/app
+    # Carrega as variáveis de ambiente do arquivo .env.example
+    env_file:
+      - ./backend/.env.example 
+    # Garante que o backend só tente iniciar depois que o banco de dados estiver pronto
+    depends_on:
+      db:
+        condition: service_healthy # Espera o healthcheck do 'db' passar
+    restart: always
+
+volumes:
+  postgres_data:
