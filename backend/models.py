@@ -1,6 +1,14 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from sqlalchemy import (
+    Column, 
+    Integer, 
+    String, 
+    Float, 
+    DateTime, 
+    ForeignKey, 
+    Boolean
+)
 from sqlalchemy.orm import relationship
-from database import Base
+from database import Base # Corrigido: importação absoluta
 from datetime import datetime
 
 # --- 1. MODELO DE CATEGORIA ---
@@ -33,3 +41,12 @@ class Transaction(Base):
     category = relationship("Category", back_populates="transactions")
     
     # Futuramente, adicionaremos user_id (ForeignKey para a tabela de usuários)
+
+class User(Base): # <--- VERIFIQUE SE ESTÁ EXATAMENTE ASSIM
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    # Coluna para armazenar a senha HASHED
+    hashed_password = Column(String, nullable=False)
+    is_active = Column(Boolean, default=True)

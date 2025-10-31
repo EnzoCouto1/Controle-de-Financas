@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
 # --- 1. SCHEMAS DE CATEGORIA ---
@@ -45,3 +45,24 @@ class Transaction(TransactionBase):
     
     class Config:
         from_attributes = True
+
+
+class UserBase(BaseModel):  
+    email: EmailStr         
+
+class UserCreate(UserBase):
+    password: str
+
+class User(UserBase):  
+    id: int
+    is_active: bool
+    
+    class Config:
+        from_attributes = True
+
+class Token(BaseModel): 
+    access_token: str
+    token_type: str = "bearer"
+
+class TokenData(BaseModel):
+    email: str | None = None

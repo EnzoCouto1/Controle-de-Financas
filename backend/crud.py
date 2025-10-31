@@ -1,8 +1,8 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 # Importações absolutas corrigidas
 import models, schemas 
 from datetime import datetime
-from sqlalchemy.orm import selectinload
+from security import get_password_hash # Importa a função de hashing
 
 # --- 1. OPERAÇÕES DE CATEGORIA ---
 
@@ -56,3 +56,43 @@ def get_transactions(db: Session, skip: int = 0, limit: int = 100):
              .offset(skip)\
              .limit(limit)\
              .all()
+
+
+def delete_transaction(db: Session, transaction_id: int):
+    # 1. Encontra a transação pelo ID
+    db_transaction = db.query(models.Transaction).filter(models.Transaction.id == transaction_id).first()
+
+    # 2. Se a transação existir, exclui e confirma
+    if db_transaction:
+        db.delete(db_transaction)
+        db.commit()
+        # Retorna o objeto excluído, embora na prática o cliente receba 204 No Content
+        return db_transaction
+    
+    # 3. Retorna None se a transação não for encontrada
+    return None
+
+
+# Função para buscar um usuário pelo email (necessário para login e cadastro)
+def get_user_by_email(db: Session, email: str):
+    return db.query(models.User).filter(models.User.email == email).first() # <--- ESSA É A FUNÇÃO QUE FALTAVA!
+
+# Função para criar um novo Usuário
+def create_user(db: Session, user: schemas.UserCreate):
+    # 1. Gera o hash da senha (AGORA COM TRUNCAGEM AQUI)
+    # O user.password é a string da senha.
+    senha_truncada = user.password[:72] 
+    hashed_password = get_password_hash(senha_truncada)
+
+    # 2. Cria a instância do modelo SQLAlchemy
+    db_user = models.User(
+        email=user.email,
+        hashed_password=hashed_password
+    )
+    
+    # 3. Adiciona, confirma e atualiza
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    
+    return db_user

@@ -27,22 +27,23 @@ services:
   # 2. SERVIÇO DO BACKEND (FastAPI)
   backend:
     build:
-      context: ./backend # Informa ao Docker para olhar dentro da pasta 'backend'
+      context: ./backend
       dockerfile: Dockerfile
     container_name: financas_backend
-    # Mapeia a porta 8000 do container para a porta 8000 da sua máquina
     ports:
       - "8000:8000"
-    # Monta o código local no container para que o hot-reload funcione
     volumes:
       - ./backend:/app
-    # Carrega as variáveis de ambiente do arquivo .env.example
     env_file:
       - ./backend/.env.example 
-    # Garante que o backend só tente iniciar depois que o banco de dados estiver pronto
+    # ADICIONE ESTA SEÇÃO:
+    environment:
+      # Diz ao Passlib para usar uma sintaxe de hash mais robusta (2b) no teste interno
+      PASSLIB_CONFIG: "bcrypt__ident=2b" 
+    # FIM DA SEÇÃO ADICIONADA
     depends_on:
       db:
-        condition: service_healthy # Espera o healthcheck do 'db' passar
+        condition: service_healthy
     restart: always
 
 volumes:

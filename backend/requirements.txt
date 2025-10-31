@@ -4,3 +4,8 @@ sqlalchemy
 pydantic
 psycopg2-binary  # Driver para PostgreSQL
 python-dotenv
+python-multipart
+passlib[bcrypt]==1.7.4 # Versão estável do passlib
+bcrypt==3.2.0           # Versão estável do bcrypt
+python-jose[cryptography]
+email-validator
