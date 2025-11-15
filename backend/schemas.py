@@ -66,3 +66,11 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: str | None = None
+
+class TransactionUpdate(BaseModel):
+    description: str | None = None
+    amount: float | None = None
+    category_id: int | None = None
+    
+    class Config:
+        from_attributes = True

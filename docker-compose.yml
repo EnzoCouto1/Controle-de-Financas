@@ -46,5 +46,22 @@ services:
         condition: service_healthy
     restart: always
 
+  frontend:
+    build:
+      context: ./frontend      # O Dockerfile está dentro da pasta 'frontend'
+      dockerfile: Dockerfile
+    container_name: financas_frontend
+    # Mapeia a porta 3000 do container para a porta 3000 da sua máquina
+    ports:
+      - "3000:3000"
+    # Monta o volume para que as mudanças no código React sejam instantâneas (hot-reload)
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules # Impede que o host sobrescreva a pasta node_modules
+    # Garante que o backend esteja rodando para o frontend fazer chamadas API
+    depends_on:
+      - backend
+    restart: always
+
 volumes:
   postgres_data:
