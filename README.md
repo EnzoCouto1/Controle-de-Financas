@@ -8,8 +8,6 @@ Uma aplicação web completa (**Full Stack**) para gestão financeira pessoal. O
 
 O projeto foi desenvolvido com foco em arquitetura de microsserviços, utilizando **Docker** para orquestração de containers.
 
-## 📸 Screenshots
-
 ## 🛠️ Tecnologias Utilizadas
 
 O projeto foi construído utilizando uma stack moderna e robusta:
