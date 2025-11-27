@@ -65,7 +65,6 @@ Graças ao Docker, você não precisa instalar Python, Node.js ou PostgreSQL na 
 
 1. **Clone o repositório:**
     ```bash
-    # Substitua SEU-USUARIO pelo seu nome de usuário do GitHub
     git clone https://github.com/EnzoCouto1/Controle-de-Financas
     cd Controle-de-Financas
     ```
