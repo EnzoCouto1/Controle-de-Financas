@@ -1,80 +1,110 @@
-# Controle de Finanças 💸
+# 💰 Sistema de Controle de Finanças Pessoais
 
-![Badge de Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![Badge de Licença](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/Status-Concluído-green)
+![Docker](https://img.shields.io/badge/Docker-Enabled-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 📝 Descrição do Projeto
+Uma aplicação web completa (**Full Stack**) para gestão financeira pessoal. O sistema permite que usuários se cadastrem, registrem suas receitas e despesas, categorizem lançamentos e visualizem um dashboard interativo com resumo financeiro e gráficos.
 
-É um sistema web para controle de finanças pessoais, desenvolvido como projeto final acadêmico. A plataforma permite que os usuários cadastrem suas receitas e despesas de forma categorizada, oferecendo uma visão clara e organizada da sua vida financeira.
-## ✨ Funcionalidades Principais
+O projeto foi desenvolvido com foco em arquitetura de microsserviços, utilizando **Docker** para orquestração de containers.
 
--   ✅ **Autenticação de Usuários:** Sistema seguro de cadastro e login.
--   ✅ **CRUD de Lançamentos:** Crie, leia, atualize e delete transações financeiras.
--   ✅ **Categorização:** Associe cada lançamento a uma categoria (Ex: Moradia, Lazer, Salário).
--   ✅ **Dashboard Intuitivo:** Visualize um resumo do balanço mensal e os últimos lançamentos.
--   ✅ **Containerização:** Toda a aplicação roda em containers Docker, garantindo portabilidade e um ambiente de desenvolvimento consistente.
+## 📸 Screenshots
 
 ## 🛠️ Tecnologias Utilizadas
 
-Este projeto é dividido em três serviços principais, orquestrados com Docker Compose:
+O projeto foi construído utilizando uma stack moderna e robusta:
 
--   **Backend:**
-    -   [Python 3.11](https://www.python.org/)
-    -   [FastAPI](https://fastapi.tiangolo.com/) - Framework web para a construção da API REST.
-    -   [SQLAlchemy](https://www.sqlalchemy.org/) - ORM para comunicação com o banco de dados.
+### **Backend (API)**
+* 🐍 **Python 3.11**
+* ⚡ **FastAPI** - Framework de alta performance para construção de APIs.
+* 🗄️ **SQLAlchemy** - ORM para interação com o banco de dados.
+* 🔒 **Passlib & Bcrypt** - Para hashing seguro de senhas.
+* 🔑 **Python-JOSE** - Para geração e validação de tokens JWT.
+* ✅ **Pydantic** - Para validação e serialização de dados.
 
--   **Frontend:**
-    -   [React](https://reactjs.org/)
-    -   [Axios](https://axios-http.com/) - Para realizar as chamadas à API.
+### **Frontend (Interface)**
+* ⚛️ **React.js** - Biblioteca para construção de interfaces.
+* ⚡ **Vite** - Build tool rápida e leve.
+* 📡 **Axios** - Cliente HTTP para comunicação com a API.
+* 📊 **Chart.js & React-chartjs-2** - Para visualização de dados (Gráficos).
+* 🎨 **CSS3** - Estilização personalizada e responsiva.
 
--   **Banco de Dados:**
-    -   [PostgreSQL](https://www.postgresql.org/)
+### **Infraestrutura & Banco de Dados**
+* 🐳 **Docker** & **Docker Compose** - Para containerização e orquestração.
+* 🐘 **PostgreSQL** - Banco de dados relacional robusto.
 
--   **Infraestrutura e Deploy:**
-    -   [Docker](https://www.docker.com/)
-    -   [Docker Compose](https://docs.docker.com/compose/)
+---
+
+## ✨ Funcionalidades
+
+* **Autenticação e Segurança:**
+    * Cadastro de novos usuários.
+    * Login seguro com geração de Token JWT.
+    * Proteção de rotas (apenas usuários logados acessam seus dados).
+* **Gestão de Categorias:**
+    * Criação de categorias personalizadas (ex: Lazer, Salário).
+    * Classificação por Tipo (Receita ou Despesa).
+* **Gestão de Transações:**
+    * Adicionar novas receitas e despesas.
+    * Visualizar histórico de lançamentos.
+    * Editar e Excluir transações existentes.
+* **Dashboard Interativo:**
+    * Resumo financeiro automático (Total Receitas - Total Despesas = Saldo).
+    * Gráfico de Pizza para visualização de despesas por categoria.
+
+---
 
 ## 🚀 Como Executar o Projeto
 
-Para rodar este projeto em seu ambiente local, siga os passos abaixo.
+Graças ao Docker, você não precisa instalar Python, Node.js ou PostgreSQL na sua máquina. Basta ter o **Docker** e o **Git**.
 
 ### Pré-requisitos
 
--   [Git](https://git-scm.com/)
--   [Docker](https://www.docker.com/products/docker-desktop)
--   [Docker Compose](https://docs.docker.com/compose/install/)
+* [Docker Desktop](https://www.docker.com/products/docker-desktop) instalado e rodando.
+* [Git](https://git-scm.com/) instalado.
 
 ### Passo a Passo
 
-1.  **Clone o repositório:**
+1. **Clone o repositório:**
     ```bash
+    # Substitua SEU-USUARIO pelo seu nome de usuário do GitHub
     git clone https://github.com/EnzoCouto1/Controle-de-Financas
+    cd Controle-de-Financas
     ```
 
-2.  **Navegue até o diretório do projeto:**
-    ```bash
-    cd !!SEU-REPOSITORIO!!(Em desenvolvimento)
-    ```
+2. **Configure as variáveis de ambiente (Backend):**
+    * Entre na pasta `backend`.
+    * Certifique-se de que existe um arquivo `.env` (ou copie o `.env.example` para `.env`).
+    * *Nota: O Docker Compose já está configurado para injetar as credenciais padrões.*
 
-3.  **Crie um arquivo de variáveis de ambiente:**
-    * No backend, pode haver um arquivo `.env.example`. Copie-o para um novo arquivo `.env` e preencha as variáveis necessárias, como as credenciais do banco de dados.
-    ```bash
-    # Exemplo - dentro da pasta /backend
-    cp .env.example .env
-    ```
-
-4.  **Suba os containers com Docker Compose:**
-    * Este comando irá construir as imagens e iniciar os containers do backend, frontend e banco de dados em modo detached (-d).
+3. **Suba a aplicação com Docker Compose:**
+    Este comando irá construir as imagens e iniciar o Backend, Frontend e Banco de Dados.
     ```bash
     docker-compose up -d --build
     ```
 
-5.  **Acesse a aplicação:**
-    * **Frontend:** Abra seu navegador e acesse `http://localhost:3000`
-    * **Backend (Documentação da API):** Acesse `http://localhost:8000/docs`
+4. **Acesse a aplicação:**
+    * **Frontend (Aplicação Web):** Abra seu navegador em [http://localhost:3000](http://localhost:3000).
+    * **Backend (Documentação Swagger):** Acesse [http://localhost:8000/docs](http://localhost:8000/docs).
 
-## 👨‍💻 Autor
+---
 
-Feito por **[Enzo Couto]**
+## 📂 Estrutura do Projeto
 
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EnzoCouto1)
+```text
+Controle-de-Financas/
+├── backend/                # Código fonte da API (FastAPI)
+│   ├── routers/            # Rotas da API (Auth, Users, Transactions, Categories)
+│   ├── crud.py             # Lógica de banco de dados
+│   ├── database.py         # Configuração do PostgreSQL
+│   ├── models.py           # Modelos das tabelas (SQLAlchemy)
+│   ├── schemas.py          # Schemas de validação (Pydantic)
+│   ├── security.py         # Lógica de Hashing e JWT
+│   └── main.py             # Entrada da aplicação
+├── frontend/               # Código fonte da Interface (React)
+│   ├── src/
+│   │   ├── components/     # Componentes (Home, Login, Forms, Charts)
+│   │   ├── api.js          # Configuração do Axios e Interceptors
+│   │   └── App.jsx         # Componente principal e rotas
+├── docker-compose.yml      # Orquestração dos containers
+└── README.md               # Documentação do projeto
