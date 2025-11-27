@@ -1,10 +1,10 @@
-// frontend/src/components/Home.jsx
-
 import React, { useState, useEffect } from 'react';
 import api from '../api';
 import TransactionForm from './TransactionForm'; 
 import EditTransactionModal from './EditTransactionModal';
-import CategoryForm from './CategoryForm'; // 1. IMPORTAÇÃO ADICIONADA
+import CategoryForm from './CategoryForm'; 
+import ExpensePieChart from './ExpensePieChart';
+import FinancialSummary from './FinancialSummary';
 
 const Home = ({ onLogout }) => {
     const [categories, setCategories] = useState([]);
@@ -83,6 +83,13 @@ const Home = ({ onLogout }) => {
             {message && <p style={{ color: 'green' }}>{message}</p>}
             
             <hr />
+
+            <FinancialSummary transactions={transactions} />
+
+            {/* Passamos 'categories' também para ele poder calcular as cores corretamente se quiser */}
+            <div style={{ marginBottom: '40px' }}>
+                <ExpensePieChart transactions={transactions} categories={categories} />
+            </div>
 
             {/* Formulário de Nova Transação */}
             <TransactionForm 

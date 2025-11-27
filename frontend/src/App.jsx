@@ -29,7 +29,7 @@ function App() {
   if (isLoggedIn) {
     return (
         <div className="App">
-            <h1>TESTE DE ATUALIZAÇÃO</h1>
+            <h1>Controle de Finanças</h1>
             <Home onLogout={handleLogout} /> 
         </div>
     );
@@ -48,7 +48,14 @@ function App() {
             <Login onLogin={handleLogin} />
         )}
 
-        <button onClick={toggleView} style={{ marginTop: '20px' }}>
+        <button 
+            onClick={toggleView} 
+            style={{ 
+                marginTop: '20px', 
+                maxWidth: '400px', 
+                width: '100%'      
+            }}
+        >
             {showRegister ? 'Voltar para Login' : 'Ir para Cadastro'}
         </button>
     </div>
